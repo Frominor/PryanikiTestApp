@@ -1,0 +1,32 @@
+.DataItem {
+  padding: 5px;
+  margin: 5px 5px 5px 5px;
+  border: 1px solid black;
+
+  flex: 1;
+}
+
+.DelBtn {
+  background-color: red;
+}
+.DelAndChangeBox {
+  display: flex;
+  width: 100%;
+  margin-top: 5px;
+  row-gap: 5px;
+  justify-content: space-around;
+}
+.DelBtn:hover {
+  background-color: rgb(216, 16, 16);
+}
+
+.ChangeBtn {
+  background-color: rgb(87, 198, 235);
+  color: white;
+  padding: 2px;
+  min-width: 40%;
+  border-radius: 5px;
+}
+.ChangeBtn:hover {
+  background-color: rgb(37, 156, 196);
+}

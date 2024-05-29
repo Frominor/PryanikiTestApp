@@ -1,0 +1,31 @@
+.InfoAboutTable {
+  width: 50%;
+  height: 60%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.DataItemBox {
+  width: 100%;
+
+  border: 1px solid black;
+  display: flex;
+
+  flex-wrap: wrap;
+}
+.Scroll {
+  overflow-y: scroll;
+}
+.CreatePost {
+  background-color: rgb(15, 250, 15);
+  padding: 5px;
+  color: white;
+  font-weight: 700;
+  border-radius: 2px;
+}
+.CreatePost:hover {
+  background-color: rgb(16, 190, 16);
+}
