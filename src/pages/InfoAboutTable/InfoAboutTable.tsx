@@ -1,21 +1,32 @@
 import React from "react";
+
 import { Loader } from "../../components/Loader/Loader";
-import "./InfoAboutTable.css";
 import { DataItem } from "./DataItem/DataItem";
+import { IDataItem } from "../../interfaces/IDataItem";
+import { ChangePost } from "../../utils/ChangePost";
+
 import CreatePost from "../../utils/CreatePost";
 import GetInfo from "../../utils/GetData";
 import Delete from "../../utils/DeletePost";
-import { IDataItem } from "../../interfaces/IDataItem";
-import { ChangePost } from "../../utils/ChangePost";
-import { Alert } from "../../components/Alert/Alert";
 
+import "./InfoAboutTable.css";
+import { CSSTransition } from "react-transition-group";
 export const InfoAboutTable: React.FC = () => {
   const [IsLoading, SetisLoading] = React.useState<boolean>(false);
   const [Data, SetData] = React.useState<any>([]);
   const [Error, SetError] = React.useState<string | null>(null);
+  const [inProp, setInProp] = React.useState(false);
+  const nodeRef = React.useRef(null);
   React.useEffect(() => {
     GetInfo(SetisLoading, SetData);
   }, []);
+  React.useEffect(() => {
+    if (Error) {
+      setInProp(true);
+    } else {
+      setInProp(false);
+    }
+  }, [Error]);
 
   return (
     <div className="InfoAboutTable">
@@ -54,7 +65,20 @@ export const InfoAboutTable: React.FC = () => {
       >
         Создать пост
       </button>
-      {Error && <Alert Background="red" isError={true} Text={Error}></Alert>}
+      {Error && (
+        <CSSTransition
+          nodeRef={nodeRef}
+          in={inProp}
+          timeout={700}
+          unmountOnExit
+          mountOnEnter
+          classNames="alert"
+        >
+          <div ref={nodeRef} className="Alert Error">
+            {Error}
+          </div>
+        </CSSTransition>
+      )}
     </div>
   );
 };

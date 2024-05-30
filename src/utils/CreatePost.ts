@@ -22,7 +22,7 @@ export default async function CreatePost(
     },
     {
       headers: {
-        "x-auth": token,
+        "x-auth": "dsdsd",
       },
     }
   );

@@ -1,6 +1,8 @@
 import React from "react";
-import "./DataItem.css";
+
 import { Button } from "../../../components/button/Button";
+
+import "./DataItem.css";
 interface DataItemProps {
   documentName: string;
   companySigDate: string;
