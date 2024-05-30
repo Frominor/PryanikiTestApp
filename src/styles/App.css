@@ -16,5 +16,9 @@
   right: 10%;
   padding: 15px;
   border-radius: 5px;
+  color: white;
   font-weight: 700;
+}
+.Info {
+  background-color: rgb(173, 173, 40);
 }
