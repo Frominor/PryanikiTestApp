@@ -29,6 +29,7 @@
 .CreatePost:hover {
   background-color: rgb(16, 190, 16);
 }
+<<<<<<< HEAD
 .Error {
   background-color: red;
   color: white;
@@ -48,3 +49,5 @@
   opacity: 0;
   transition: opacity 200ms;
 }
+=======
+>>>>>>> 1f2b4cb3e0c5191386375adedda8241d4a2c07fa
