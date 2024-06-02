@@ -7,11 +7,10 @@ export default async function Deletet(
   SetError: (arg: null) => void
 ) {
   const token = window.localStorage.getItem("token");
-  console.log(token);
   const { data } = await axios.post(
     `https://test.v5.pryaniky.com/ru/data/v3/testmethods/docs/userdocs/delete/138360c1-e09f-4f35-9b47-1a7fefeb5f80`,
 
-    { headers: { "x-auth": "supersecrettoken_for_user8" } }
+    { headers: { "x-auth": token } }
   );
   console.log(data);
 
