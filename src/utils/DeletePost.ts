@@ -12,7 +12,6 @@ export default async function Deletet(
 
     { headers: { "x-auth": token } }
   );
-  console.log(data);
 
   if (data.error_message == "OK") {
     SetData(Data.filter((item: IDataItem) => item.id != id));
