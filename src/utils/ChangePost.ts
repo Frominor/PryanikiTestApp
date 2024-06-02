@@ -4,7 +4,7 @@ import { IDataItem } from "../interfaces/IDataItem";
 export async function ChangePost(
   id: string,
   SetisLoading: (arg: boolean) => void,
-  SetData: (arg: {}[]) => void,
+  SetData: (arg: IDataItem[]) => void,
   Data: IDataItem[],
   SetError: (arg: null) => void
 ) {

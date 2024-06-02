@@ -13,7 +13,12 @@ export const Button: React.FC<ButtonProps> = ({
   id,
 }) => {
   return (
-    <button className={clasName} onClick={() => func(id)}>
+    <button
+      className={clasName}
+      onClick={() => {
+        func(id);
+      }}
+    >
       {title}
     </button>
   );

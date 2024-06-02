@@ -4,13 +4,12 @@ import { Loader } from "../../components/Loader/Loader";
 import { DataItem } from "./DataItem/DataItem";
 import { IDataItem } from "../../interfaces/IDataItem";
 import { ChangePost } from "../../utils/ChangePost";
+import { CSSTransition } from "react-transition-group";
 
 import CreatePost from "../../utils/CreatePost";
 import GetInfo from "../../utils/GetData";
-import Delete from "../../utils/DeletePost";
 
 import "./InfoAboutTable.css";
-import { CSSTransition } from "react-transition-group";
 export const InfoAboutTable: React.FC = () => {
   const [IsLoading, SetisLoading] = React.useState<boolean>(false);
   const [Data, SetData] = React.useState<any>([]);
@@ -39,8 +38,10 @@ export const InfoAboutTable: React.FC = () => {
           {Data.map((item: IDataItem, index: number) => {
             return (
               <DataItem
+                Data={Data}
+                SetData={SetData}
+                SetError={SetError}
                 key={index}
-                Delete={() => Delete(item.id, SetData, Data, SetError)}
                 companySigDate={item.companySigDate}
                 documentName={item.documentName}
                 documentStatus={item.documentStatus}

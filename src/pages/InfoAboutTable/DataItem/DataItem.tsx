@@ -1,8 +1,10 @@
 import React from "react";
-
+import axios from "axios";
 import { Button } from "../../../components/button/Button";
 
 import "./DataItem.css";
+import { IDataItem } from "../../../interfaces/IDataItem";
+import Delete from "../../../utils/DeletePost";
 interface DataItemProps {
   documentName: string;
   companySigDate: string;
@@ -12,8 +14,10 @@ interface DataItemProps {
   employeeSigDate: string;
   employeeSignatureName: string;
   id: string;
-  Delete: (id: string) => void;
   key: number;
+  Data: IDataItem[];
+  SetError: (arg: string | null) => void;
+  SetData: (arg: any) => void;
   ChangePost: (id: string) => void;
 }
 export const DataItem: React.FC<DataItemProps> = ({
@@ -26,7 +30,9 @@ export const DataItem: React.FC<DataItemProps> = ({
   employeeSignatureName,
   ChangePost,
   id,
-  Delete,
+  Data,
+  SetData,
+  SetError,
   key,
 }) => {
   return (
@@ -48,7 +54,7 @@ export const DataItem: React.FC<DataItemProps> = ({
         <Button
           clasName="DelBtn btn"
           title="Удалить"
-          func={Delete}
+          func={() => Delete(id, SetData, Data, SetError)}
           id={id}
         ></Button>
       </div>
