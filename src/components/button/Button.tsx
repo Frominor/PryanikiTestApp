@@ -2,9 +2,9 @@ import React from "react";
 import "./Button.css";
 interface ButtonProps {
   title: string;
-  func: (arg: string) => void;
+  func: (arg?: string) => void;
   clasName: string;
-  id: string;
+  id?: string;
 }
 export const Button: React.FC<ButtonProps> = ({
   title,
@@ -16,7 +16,11 @@ export const Button: React.FC<ButtonProps> = ({
     <button
       className={clasName}
       onClick={() => {
-        func(id);
+        if (id) {
+          func(id);
+        } else {
+          func();
+        }
       }}
     >
       {title}

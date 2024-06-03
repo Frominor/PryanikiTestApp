@@ -1,0 +1,32 @@
+.PopUp {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: 4;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+}
+.PopUp_Content {
+  opacity: 1;
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50%;
+  border-radius: 10px;
+  position: relative;
+  background-color: white;
+}
+.ClosePopUp {
+  position: absolute;
+  right: -2.3%;
+  top: -4%;
+  cursor: pointer;
+  border-radius: 50%;
+  border: 1px solid black;
+}

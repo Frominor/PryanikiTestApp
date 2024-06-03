@@ -14,11 +14,11 @@ export default async function CreatePost(
       companySigDate: "2022-12-23T11:19:27.017Z\t",
       companySignatureName: "test",
       documentName: "test",
-      documentStatus: "test",
-      documentType: "test",
+      documentStatus: "fsdfsfsfdsfdsf",
+      documentType: "gfdgdgdg",
       employeeNumber: "test",
       employeeSigDate: "2022-12-23T11:19:27.017Z\t",
-      employeeSignatureName: "test",
+      employeeSignatureName: "asdadadadadadad",
     },
     {
       headers: {

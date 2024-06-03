@@ -19,7 +19,7 @@ export const AuthorizationBox: React.FC<AuthorizationBoxProps> = ({
       </div>
       <div className="AuthBoxMain">
         <input
-          className={Error ? "NotcCorrect login" : "login"}
+          className={Error ? "NotCorrect login" : "login"}
           value={Login}
           placeholder="Введите ваш логин"
           onChange={(e) => SetLogin(e.target.value)}

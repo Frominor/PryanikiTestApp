@@ -1,10 +1,11 @@
 import React from "react";
-import axios from "axios";
+
 import { Button } from "../../../components/button/Button";
+import { IDataItem } from "../../../interfaces/IDataItem";
+
+import Delete from "../../../utils/DeletePost";
 
 import "./DataItem.css";
-import { IDataItem } from "../../../interfaces/IDataItem";
-import Delete from "../../../utils/DeletePost";
 interface DataItemProps {
   documentName: string;
   companySigDate: string;
@@ -15,26 +16,44 @@ interface DataItemProps {
   employeeSignatureName: string;
   id: string;
   key: number;
+  SetItem: (arg: {}) => void;
   Data: IDataItem[];
   SetError: (arg: string | null) => void;
   SetData: (arg: any) => void;
-  ChangePost: (id: string) => void;
+  SetOpen: (arg: boolean) => void;
+  SetIsEdited: (arg: boolean) => void;
 }
 export const DataItem: React.FC<DataItemProps> = ({
   companySigDate,
   documentName,
   documentStatus,
   documentType,
+  SetItem,
   employeeNumber,
   employeeSigDate,
   employeeSignatureName,
-  ChangePost,
+  SetOpen,
   id,
   Data,
   SetData,
+  SetIsEdited,
   SetError,
   key,
 }) => {
+  function Test() {
+    SetOpen(true);
+    SetIsEdited(true);
+    SetItem({
+      companySigDate,
+      documentName,
+      documentStatus,
+      documentType,
+      employeeNumber,
+      employeeSigDate,
+      employeeSignatureName,
+      id,
+    });
+  }
   return (
     <div className="DataItem" key={key}>
       <p>{documentName}</p>
@@ -48,7 +67,7 @@ export const DataItem: React.FC<DataItemProps> = ({
         <Button
           clasName="ChangeBtn btn"
           title="Изменить"
-          func={ChangePost}
+          func={() => Test()}
           id={id}
         ></Button>
         <Button
