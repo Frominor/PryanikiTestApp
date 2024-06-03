@@ -2,6 +2,7 @@ import React from "react";
 
 import { Loader } from "../../components/Loader/Loader";
 import { DataItem } from "./DataItem/DataItem";
+import { Button } from "../../components/button/Button";
 import { IDataItem } from "../../interfaces/IDataItem";
 import { CSSTransition } from "react-transition-group";
 import { PopUp } from "../../components/PopUp/PopUp";
@@ -9,7 +10,6 @@ import { PopUp } from "../../components/PopUp/PopUp";
 import GetInfo from "../../utils/GetData";
 
 import "./InfoAboutTable.css";
-import { Button } from "../../components/button/Button";
 export const InfoAboutTable: React.FC = () => {
   const [IsLoading, SetisLoading] = React.useState<boolean>(false);
   const [Data, SetData] = React.useState<any>([]);
@@ -34,15 +34,16 @@ export const InfoAboutTable: React.FC = () => {
     <div className="InfoAboutTable">
       {Open && (
         <PopUp
+          isOpen={Open}
           Item={Item}
           isEdited={isEdited}
-          SetIsEdited={SetIsEdited}
-          IsLoading={IsLoading}
-          Data={Data}
-          SetData={SetData}
-          SetError={SetError}
-          SetisLoading={SetisLoading}
-          SetOpen={SetOpen}
+          setIsEdited={SetIsEdited}
+          isLoading={IsLoading}
+          data={Data}
+          setData={SetData}
+          setError={SetError}
+          setIsLoading={SetisLoading}
+          setOpen={SetOpen}
         ></PopUp>
       )}
       {IsLoading ? (

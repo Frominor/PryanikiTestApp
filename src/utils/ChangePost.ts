@@ -1,25 +1,27 @@
 import axios from "axios";
 import { IDataItem } from "../interfaces/IDataItem";
+import { InputValues } from "../interfaces/Iinputs";
 
-export async function ChangePost(
+export default async function ChangePost(
   id: string,
   SetisLoading: (arg: boolean) => void,
   SetData: (arg: IDataItem[]) => void,
   Data: IDataItem[],
-  SetError: (arg: null) => void
+  SetError: (arg: null) => void,
+  InpValues: InputValues
 ) {
   SetisLoading(true);
   const { data } = await axios.post(
     `${process.env.REACT_APP_HOST}/ru/data/v3/testmethods/docs/userdocs/set/${id}`,
     {
-      companySigDate: "2022-12-23T11:19:27.017Z\t",
-      companySignatureName: "test",
-      documentName: "test",
-      documentStatus: "test",
-      documentType: "test",
-      employeeNumber: "test",
-      employeeSigDate: "2022-12-23T11:19:27.017Z\t",
-      employeeSignatureName: "test",
+      companySigDate: `${new Date().toISOString()}`,
+      companySignatureName: InpValues.companySignatureName,
+      documentName: InpValues.documentName,
+      documentStatus: InpValues.documentStatus,
+      documentType: InpValues.documentType,
+      employeeNumber: InpValues.employeeNumber,
+      employeeSigDate: `${new Date().toISOString()}`,
+      employeeSignatureName: InpValues.employeeSignatureName,
     },
     {
       headers: {

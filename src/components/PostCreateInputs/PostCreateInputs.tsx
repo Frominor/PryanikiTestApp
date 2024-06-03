@@ -1,5 +1,9 @@
 import React from "react";
+
 import { InputValues } from "../../interfaces/Iinputs";
+
+import { PostCreateInput } from "./PostCreateInput/PostCreateInput";
+
 import "./PostCreateInputs.css";
 interface PostProps {
   isEdited: boolean;
@@ -13,64 +17,43 @@ export const PostCreateInputs: React.FC<PostProps> = ({
   Item,
   errors,
 }) => {
+  const fields = [
+    {
+      name: "documentName",
+      label: "Название документа",
+      value: Item.documentName,
+    },
+    {
+      name: "documentStatus",
+      label: "Статус документа",
+      value: Item.documentStatus,
+    },
+    { name: "documentType", label: "Тип документа", value: Item.documentType },
+    {
+      name: "employeeNumber",
+      label: "Номер сотрудника",
+      value: Item.employeeNumber,
+    },
+    {
+      name: "employeeSignatureName",
+      label: "Имя подписавшего",
+      value: Item.employeeSignatureName,
+    },
+  ];
   return (
     <div className="PostCreateInputs">
-      <div className="PostCreateInput">
-        <label htmlFor="documentName">documentName</label>
-        <input
-          className={errors.documentName?.message ? "NotCorrect" : ""}
-          {...register("documentName", {
-            required: "Поле не должно быть пустым ",
-            value: isEdited ? Item.documentName : "",
-          })}
-        />
-        <p className="ErrMessage">{errors.documentName?.message}</p>
-      </div>
-      <div className="PostCreateInput">
-        <label htmlFor="documentStatus">documentStatus</label>
-        <input
-          className={errors.documentStatus?.message ? "NotCorrect" : ""}
-          {...register("documentStatus", {
-            required: "Поле не должно быть пустым ",
-            value: isEdited ? Item.documentStatus : "",
-          })}
-        />
-        <p className="ErrMessage">{errors.documentStatus?.message}</p>
-      </div>
-      <div className="PostCreateInput">
-        <label htmlFor="documentType">documentType</label>
-        <input
-          className={errors.documentType?.message ? "NotCorrect" : ""}
-          {...register("documentType", {
-            required: "Поле не должно быть пустым ",
-            value: isEdited ? Item.documentType : "",
-          })}
-        />
-        <p className="ErrMessage">{errors.documentType?.message}</p>
-      </div>
-      <div className="PostCreateInput">
-        <label htmlFor="employeeNumber">employeeNumber</label>
-        <input
-          className={errors.employeeNumber?.message ? "NotCorrect" : ""}
-          {...register("employeeNumber", {
-            required: "Поле не должно быть пустым ",
-            value: isEdited ? Item.employeeNumber : "",
-          })}
-        />
-        <p>{errors.employeeNumber?.message}</p>
-      </div>
-      <div className="PostCreateInput">
-        <label htmlFor="employeeSignatureName">employeeSignatureName</label>
-        <input
-          className={errors.employeeSignatureName?.message ? "NotCorrect" : ""}
-          {...register("employeeSignatureName", {
-            required: "Поле не должно быть пустым ",
-
-            value: isEdited ? Item.employeeSignatureName : "",
-          })}
-        />
-        <p className="ErrMessage">{errors.employeeSignatureName?.message}</p>
-      </div>
+      {fields.map((item, index) => {
+        return (
+          <PostCreateInput
+            fields={fields}
+            errors={errors}
+            isEdited={isEdited}
+            item={item}
+            register={register}
+            index={index}
+          ></PostCreateInput>
+        );
+      })}
     </div>
   );
 };

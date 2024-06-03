@@ -1,33 +1,41 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import close from "./../images/close.png";
-import axios from "axios";
+
 import { IDataItem } from "../../interfaces/IDataItem";
-import "./PopUp.css";
-import { Loader } from "../Loader/Loader";
-import { PostCreateInputs } from "../PostCreateInputs/PostCreateInputs";
 import { InputValues } from "../../interfaces/Iinputs";
 
+import close from "./../images/close.png";
+import { Loader } from "../Loader/Loader";
+import { PostCreateInputs } from "../PostCreateInputs/PostCreateInputs";
+import { Button } from "../button/Button";
+
+import ChangePost from "../../utils/ChangePost";
+import CreatePost from "../../utils/CreatePost";
+import "./PopUp.css";
+
 interface PopUpProps {
-  SetisLoading: (isLoading: boolean) => void;
-  SetOpen: (arg: boolean) => void;
-  SetData: ([]) => void;
-  Data: IDataItem[];
-  SetError: (arg: null) => void;
-  IsLoading: boolean;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
+  isOpen: boolean;
+  setOpen: (arg: boolean) => void;
+  data: IDataItem[];
+  setData: (data: IDataItem[]) => void;
+  setError: (arg: null) => void;
   isEdited: boolean;
-  SetIsEdited: (arg: boolean) => void;
+  setIsEdited: (arg: boolean) => void;
   Item: InputValues;
 }
+
 export const PopUp: React.FC<PopUpProps> = ({
-  SetOpen,
-  SetData,
-  Data,
-  SetError,
-  SetisLoading,
+  isLoading,
+  setIsLoading,
+  isOpen,
+  setOpen,
+  data,
+  setData,
+  setError,
   isEdited,
-  SetIsEdited,
-  IsLoading,
+  setIsEdited,
   Item,
 }) => {
   const {
@@ -36,103 +44,70 @@ export const PopUp: React.FC<PopUpProps> = ({
     reset,
     formState: { errors },
   } = useForm<InputValues>();
-  const token = window.localStorage.getItem("token");
-  const onSubmit: SubmitHandler<InputValues> = async (InpValues) => {
-    SetisLoading(true);
-    if (isEdited) {
-      SetOpen(false);
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_HOST}/ru/data/v3/testmethods/docs/userdocs/set/${Item.id}`,
-        {
-          companySigDate: `${new Date().toISOString()}`,
-          companySignatureName: InpValues.companySignatureName,
-          documentName: InpValues.documentName,
-          documentStatus: InpValues.documentStatus,
-          documentType: InpValues.documentType,
-          employeeNumber: InpValues.employeeNumber,
-          employeeSigDate: `${new Date().toISOString()}`,
-          employeeSignatureName: InpValues.employeeSignatureName,
-        },
-        {
-          headers: {
-            "x-auth": window.localStorage.getItem("token"),
-          },
-        }
-      );
-      if (data.error_code == 0) {
-        SetData(
-          Data.map((item: IDataItem) => {
-            if (item.id == data.data.id) {
-              item = data.data;
-              return item;
-            }
-            return item;
-          })
-        );
-        SetIsEdited(false);
-        SetError(null);
-      } else {
-        SetError(data.error_text);
-      }
-      SetisLoading(false);
-      SetIsEdited(false);
-    } else {
-      const { data } = await axios.post(
-        `${process.env.REACT_APP_HOST}/ru/data/v3/testmethods/docs/userdocs/create`,
-        {
-          companySigDate: `${new Date().toISOString()}`,
-          companySignatureName: InpValues.companySignatureName,
-          documentName: InpValues.documentName,
-          documentStatus: InpValues.documentStatus,
-          documentType: InpValues.documentType,
-          employeeNumber: InpValues.employeeNumber,
-          employeeSigDate: `${new Date().toISOString()}`,
-          employeeSignatureName: InpValues.employeeSignatureName,
-        },
-        {
-          headers: {
-            "x-auth": token,
-          },
-        }
-      );
 
-      if (data.error_code == 0) {
-        SetData([...Data, data.data]);
-        SetError(null);
-      } else {
-        SetError(data.error_text);
-      }
-      SetisLoading(false);
-    }
-
-    reset();
+  const resetState = () => {
+    setOpen(false);
+    setError(null);
+    setIsLoading(false);
+    setIsEdited(false);
   };
 
-  function Close() {
-    SetIsEdited(false);
-    SetOpen(false);
+  const onSubmit: SubmitHandler<InputValues> = async (inputValues) => {
+    setIsLoading(true);
+
+    try {
+      if (isEdited) {
+        await ChangePost(
+          Item.id,
+          setIsLoading,
+          setData,
+          data,
+          setError,
+          inputValues
+        );
+      } else {
+        await CreatePost(setIsLoading, setData, data, setError, inputValues);
+      }
+    } catch (error) {
+      console.error("Ошибка при отправке формы:", error);
+    } finally {
+      reset();
+      resetState();
+    }
+  };
+
+  if (!isOpen) {
+    return null;
   }
+
   return (
     <div className="PopUp">
       <form onSubmit={handleSubmit(onSubmit)} className="PopUp_Content">
-        <img src={close} className="ClosePopUp" onClick={() => Close()}></img>
-        {IsLoading ? (
-          <Loader></Loader>
+        <img
+          src={close}
+          alt="Закрыть"
+          className="ClosePopUp"
+          onClick={resetState}
+        />
+
+        {isLoading ? (
+          <Loader />
         ) : (
           <>
-            <h3 className="PostCreateBox_Title">Создание поста</h3>
+            <h3 className="PostCreateBox_Title">
+              {isEdited ? "Редактировать пост" : "Создание поста"}
+            </h3>
             <PostCreateInputs
               errors={errors}
               Item={Item}
               isEdited={isEdited}
               register={register}
-            ></PostCreateInputs>
+            />
             <div className="CreatePostButtonBox">
-              {isEdited ? (
-                <button className="CreatePost">Изменить </button>
-              ) : (
-                <button className="CreatePostBtn">Создать пост</button>
-              )}
+              <Button
+                clasName="CreatePostBtn"
+                title={isEdited ? "Сохранить" : "Создать пост"}
+              />
             </div>
           </>
         )}
