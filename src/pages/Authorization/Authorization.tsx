@@ -6,16 +6,24 @@ import { CSSTransition } from "react-transition-group";
 import { AuthorizationBox } from "./AuthorizationsBox/AuthorizatonBox";
 
 import Auth from "../../utils/Auth";
-
 import "./Authorization.css";
-export const Authorization: React.FC = () => {
+interface AuthorizationProps {
+  IsLoading: boolean;
+  inProp: boolean;
+  setInProp: (arg: boolean) => void;
+  SetisLoading: (arg: boolean) => void;
+}
+
+export const Authorization: React.FC<AuthorizationProps> = ({
+  IsLoading,
+  SetisLoading,
+  setInProp,
+  inProp,
+}) => {
   const [Login, SetLogin] = React.useState<string>("");
-  const [IsLoading, SetisLoading] = React.useState(false);
   const [Error, SetError] = React.useState<boolean>(false);
   const nodeRef = React.useRef(null);
-  const [inProp, setInProp] = React.useState(false);
   const navigate = useNavigate();
-
   function isEmptyValue(e: { key: string }) {
     if (Login.length > 0) {
       if (e.key == "Enter") {

@@ -7,6 +7,8 @@ import { InfoAboutTable } from "./pages/InfoAboutTable/InfoAboutTable";
 
 function App() {
   const navigate = useNavigate();
+  const [IsLoading, SetisLoading] = React.useState(false);
+  const [inProp, setInProp] = React.useState(false);
   React.useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/auth");
@@ -17,8 +19,26 @@ function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/auth" element={<Authorization></Authorization>}></Route>
-        <Route path="/info" element={<InfoAboutTable></InfoAboutTable>}></Route>
+        <Route
+          path="/auth"
+          element={
+            <Authorization
+              inProp={inProp}
+              setInProp={setInProp}
+              IsLoading={IsLoading}
+              SetisLoading={SetisLoading}
+            ></Authorization>
+          }
+        ></Route>
+        <Route
+          path="/info"
+          element={
+            <InfoAboutTable
+              inProp={inProp}
+              setInProp={setInProp}
+            ></InfoAboutTable>
+          }
+        ></Route>
       </Routes>
     </div>
   );

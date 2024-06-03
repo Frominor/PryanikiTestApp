@@ -10,11 +10,18 @@ import { PopUp } from "../../components/PopUp/PopUp";
 import GetInfo from "../../utils/GetData";
 
 import "./InfoAboutTable.css";
-export const InfoAboutTable: React.FC = () => {
+interface InfoAboutTable {
+  setInProp: (arg: boolean) => void;
+  inProp: boolean;
+}
+
+export const InfoAboutTable: React.FC<InfoAboutTable> = ({
+  setInProp,
+  inProp,
+}) => {
   const [IsLoading, SetisLoading] = React.useState<boolean>(false);
   const [Data, SetData] = React.useState<any>([]);
   const [Error, SetError] = React.useState<string | null>(null);
-  const [inProp, setInProp] = React.useState(false);
   const [Open, SetOpen] = React.useState<boolean>(false);
   const [Item, SetItem] = React.useState<null | any>({});
   const nodeRef = React.useRef(null);
